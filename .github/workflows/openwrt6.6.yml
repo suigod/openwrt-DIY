@@ -166,26 +166,20 @@ jobs:
         
     - name: 发布至release
       id: release
-      uses: ncipollo/release-action@V1
+      uses: ncipollo/release-action@Vmaster
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
         name: ${{ env.FILE_TIME }} 「 openwrt-6.6-X86-64 」
         allowUpdates: true
         tag: ${{ env.TAG_TIME }}
         commit: main
-        token: ${{ secrets.RELEASE_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
         body: |
           功能介绍：含Docker、Passwall、MosDNS、lucky、定时设置等插件。
           [固件源码](https://github.com/coolsnowwolf/lede)
           由衷感谢所有为openwrt无私奉献的大佬们
         artifacts: ${{ env.FIRMWARE }}/*
 
-    - name: 清理旧的workflow
-      uses: Mattraks/delete-workflow-runs@v2
-      with:
-        token: ${{ secrets.RELEASE_TOKEN }}
-        retain_days: 180
-        keep_minimum_runs: 10
 
 
 
